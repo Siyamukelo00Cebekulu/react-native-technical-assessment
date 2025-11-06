@@ -1,20 +1,82 @@
-// components/ActionsCard.tsx
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 interface ActionsCardProps {
   onRefresh: () => void;
   isAuthenticated?: boolean;
 }
 
+type HoverStateKeys =
+  | "health"
+  | "viewInventory"
+  | "manageItems"
+  | "refresh"
+  | "signIn"
+  | "back";
+
 export default function ActionsCard({
   onRefresh,
   isAuthenticated = false,
 }: ActionsCardProps) {
-  const handleAuthAction = (e: React.MouseEvent, action: string) => {
+  const router = useRouter();
+  const [hoverStates, setHoverStates] = useState({
+    health: false,
+    viewInventory: false,
+    manageItems: false,
+    refresh: false,
+    signIn: false,
+    back: false,
+  });
+
+  const handleHover = (button: HoverStateKeys, isHovering: boolean) => {
+    setHoverStates((prev) => ({
+      ...prev,
+      [button]: isHovering,
+    }));
+  };
+
+  const handleProtectedAction = (actionName: string) => {
     if (!isAuthenticated) {
-      e.preventDefault();
-      alert(`Please sign in to ${action.toLowerCase()}`);
-      // You can redirect to signin page instead
-      // window.location.href = '/api/auth/signin';
+      alert(`Please sign in to ${actionName.toLowerCase()}`);
+      router.push("/signin");
     }
+  };
+
+  const getButtonStyle = (
+    button: HoverStateKeys,
+    isPrimary: boolean = false
+  ) => {
+    const baseStyle = {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "0.5rem 1rem",
+      borderRadius: "0.375rem",
+      fontSize: "0.875rem",
+      fontWeight: "500",
+      textDecoration: "none",
+      cursor: "pointer",
+      transition: "all 0.2s",
+      border: "1px solid #D1D5DB",
+      color: "#374151",
+      backgroundColor: "white",
+    };
+
+    if (isPrimary) {
+      return {
+        ...baseStyle,
+        border: "1px solid transparent",
+        color: "white",
+        backgroundColor: hoverStates[button] ? "#047857" : "blueviolet",
+      };
+    }
+
+    return {
+      ...baseStyle,
+      backgroundColor: hoverStates[button] ? "#F9FAFB" : "white",
+    };
   };
 
   if (!isAuthenticated) {
@@ -78,56 +140,24 @@ export default function ActionsCard({
             href="/api/health"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "0.5rem 1rem",
-              border: "1px solid #D1D5DB",
-              borderRadius: "0.375rem",
-              fontSize: "0.875rem",
-              fontWeight: "500",
-              color: "#374151",
-              backgroundColor: "white",
-              textDecoration: "none",
-              cursor: "pointer",
-            }}
+            style={getButtonStyle("health")}
           >
             Test Health Endpoint
           </a>
           <button
-            onClick={() => (window.location.href = "/api/auth/signin")}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "0.5rem 1rem",
-              border: "1px solid transparent",
-              borderRadius: "0.375rem",
-              fontSize: "0.875rem",
-              fontWeight: "500",
-              color: "white",
-              backgroundColor: "#2563EB",
-              cursor: "pointer",
-            }}
+            onClick={() => router.push("/signin")}
+            style={getButtonStyle("signIn", true)}
+            onMouseEnter={() => handleHover("signIn", true)}
+            onMouseLeave={() => handleHover("signIn", false)}
           >
+            <span style={{ marginRight: "0.5rem" }}>🔑</span>
             Sign In
           </button>
           <button
             onClick={onRefresh}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "0.5rem 1rem",
-              border: "1px solid #D1D5DB",
-              borderRadius: "0.375rem",
-              fontSize: "0.875rem",
-              fontWeight: "500",
-              color: "#374151",
-              backgroundColor: "white",
-              cursor: "pointer",
-            }}
+            style={getButtonStyle("refresh")}
+            onMouseEnter={() => handleHover("refresh", true)}
+            onMouseLeave={() => handleHover("refresh", false)}
           >
             Refresh Status
           </button>
@@ -167,20 +197,9 @@ export default function ActionsCard({
           href="/api/health"
           target="_blank"
           rel="noopener noreferrer"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "0.5rem 1rem",
-            border: "1px solid #D1D5DB",
-            borderRadius: "0.375rem",
-            fontSize: "0.875rem",
-            fontWeight: "500",
-            color: "#374151",
-            backgroundColor: "white",
-            textDecoration: "none",
-            cursor: "pointer",
-          }}
+          style={getButtonStyle("health")}
+          onMouseEnter={() => handleHover("health", true)}
+          onMouseLeave={() => handleHover("health", false)}
         >
           Test Health Endpoint
         </a>
@@ -188,20 +207,9 @@ export default function ActionsCard({
           href="/api/inventory/item"
           target="_blank"
           rel="noopener noreferrer"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "0.5rem 1rem",
-            border: "1px solid #D1D5DB",
-            borderRadius: "0.375rem",
-            fontSize: "0.875rem",
-            fontWeight: "500",
-            color: "#374151",
-            backgroundColor: "white",
-            textDecoration: "none",
-            cursor: "pointer",
-          }}
+          style={getButtonStyle("viewInventory")}
+          onMouseEnter={() => handleHover("viewInventory", true)}
+          onMouseLeave={() => handleHover("viewInventory", false)}
         >
           View Inventory Items
         </a>
@@ -217,9 +225,12 @@ export default function ActionsCard({
             fontSize: "0.875rem",
             fontWeight: "500",
             color: "white",
-            backgroundColor: "#2563EB",
+            backgroundColor: hoverStates.refresh ? "#1D4ED8" : "#2563EB",
             cursor: "pointer",
+            transition: "all 0.2s",
           }}
+          onMouseEnter={() => handleHover("refresh", true)}
+          onMouseLeave={() => handleHover("refresh", false)}
         >
           Refresh All Data
         </button>
