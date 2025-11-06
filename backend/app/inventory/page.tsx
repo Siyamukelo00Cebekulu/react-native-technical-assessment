@@ -38,7 +38,7 @@ export default function InventoryPage() {
         const data = await response.json();
         setInventoryItems(data.items || []);
       } else {
-        setError("Failed to load inventory");
+        setError("Failed to load inventory/ Authorization!");
       }
     } catch (err) {
       setError("Failed to load inventory");
