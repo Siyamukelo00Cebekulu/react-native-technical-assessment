@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getAuth } from "@clerk/nextjs/server";
 import { connectToDatabase } from "../../../lib/mongodb";
 import { ObjectId } from "mongodb";
+import { AuditService } from "../../../lib/auditService";
 
 export default async function handler(
   req: NextApiRequest,
@@ -43,6 +44,15 @@ export default async function handler(
           adjustedByName: "User", // You can fetch user details from Clerk if needed
         };
 
+        // Get current item state
+        const currentItem = await db.collection("inventory_items").findOne({
+          _id: new ObjectId(adjustmentData.itemId as string),
+        });
+
+        if (!currentItem) {
+          return res.status(404).json({ error: "Item not found" });
+        }
+
         // Start a transaction to update both collections
         const session = client.startSession(); // Use client from connection
 
@@ -74,6 +84,35 @@ export default async function handler(
         } finally {
           await session.endSession();
         }
+        // Log quantity adjustment
+        await AuditService.logChange({
+          itemId: currentItem._id,
+          itemName: currentItem.name,
+          action: "ADJUST",
+          fieldChanged: "quantity",
+          oldValue: currentItem.quantity,
+          newValue: adjustmentData.newQuantity,
+          changedBy: userId,
+          changedByName: "User",
+          description: `Quantity adjusted: ${
+            adjustmentData.quantityDelta > 0 ? "+" : ""
+          }${adjustmentData.quantityDelta} (Reason: ${adjustmentData.reason})`,
+        });
+
+        await AuditService.logAuditTrail({
+          itemId: currentItem._id,
+          itemName: currentItem.name,
+          action: "QUANTITY_ADJUSTMENT",
+          changes: [
+            {
+              field: "quantity",
+              oldValue: currentItem.quantity,
+              newValue: adjustmentData.newQuantity,
+            },
+          ],
+          performedBy: userId,
+          performedByName: "User",
+        });
 
         return res.status(201).json({ adjustment: adjustmentData });
 

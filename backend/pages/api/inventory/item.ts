@@ -3,6 +3,7 @@ import { getAuth } from "@clerk/nextjs/server";
 import { connectToDatabase } from "../../../lib/mongodb";
 import { ObjectId } from "mongodb";
 import { InventoryItemSchema } from "../../../models/Inventory";
+import { AuditService } from "../../../lib/auditService";
 
 export default async function handler(
   req: NextApiRequest,
@@ -60,6 +61,31 @@ export default async function handler(
         const result = await db
           .collection("inventory_items")
           .insertOne(newItem);
+
+        // Log the creation in audit trail
+        await AuditService.logChange({
+          itemId: result.insertedId,
+          itemName: newItem.name,
+          action: "CREATE",
+          changedBy: userId,
+          changedByName: "User", // You can fetch user details from Clerk
+          description: `Created new inventory item: ${newItem.name}`,
+        });
+
+        await AuditService.logAuditTrail({
+          itemId: result.insertedId,
+          itemName: newItem.name,
+          action: "CREATE_ITEM",
+          changes: [
+            {
+              field: "all",
+              oldValue: null,
+              newValue: newItem,
+            },
+          ],
+          performedBy: userId,
+          performedByName: "User",
+        });
 
         return res.status(201).json({
           item: { ...newItem, _id: result.insertedId },
