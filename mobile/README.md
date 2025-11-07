@@ -30,7 +30,51 @@ This is a **mobile inventory management app** built with **React Native**, **Exp
 
 ---
 
-# Project Structure
+# Folder Structure
+
+app/
+│
+├── index.tsx # App entry point, renders RootNavigator
+│
+├── navigation/
+│ ├── RootNavigator.tsx # Chooses AuthNavigator or AppNavigator based on user state
+│ ├── AuthNavigator.tsx # Stack navigator for SignIn / SignUp
+│ └── AppNavigator.tsx # Stack navigator for Inventory screens
+│
+├── screens/
+│ ├── Auth/
+│ │ ├── SignInScreen.tsx
+│ │ └── SignUpScreen.tsx
+│ │
+│ └── Inventory/
+│ ├── InventoryListScreen.tsx
+│ ├── ItemDetailScreen.tsx
+│ ├── AddEditItemScreen.tsx
+│ ├── AdjustQuantityScreen.tsx
+│ └── AuditLogScreen.tsx
+│
+components/
+├── InputField.tsx # Reusable input component
+├── ItemCard.tsx # Card component for displaying inventory items
+└── LoadingSpinner.tsx # Loading indicator
+│
+context/
+└── AuthContext.tsx # Handles user authentication state
+│
+services/
+└── api.ts # Axios setup for API requests
+│
+utils/
+└── validators.ts # Custom validation helpers
+
+## Directory Overview
+
+- **app/**: Main application directory containing the entry point and navigation
+- **components/**: Reusable UI components used throughout the app
+- **context/**: React Context providers for state management
+- **services/**: API and external service configurations
+- **utils/**: Helper functions and utilities
+
 
 | Path | Type | Description |
 |------|------|-------------|
