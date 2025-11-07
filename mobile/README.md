@@ -1,8 +1,10 @@
-# Welcome to your Expo app 👋
+# MobileApp
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a **mobile inventory management app** built with **React Native**, **Expo**, and **TypeScript**. The app demonstrates a **minimum viable product (MVP)** user flow, including authentication, inventory listing, item management, quantity adjustments, and audit logging. It uses **React Navigation** for navigation and **React Context** for authentication state management.
 
-## Get started
+---
+
+## ⚙️ Setup & Run Instructions
 
 1. Install dependencies
 
@@ -16,35 +18,47 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## 📱 Features
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Authentication:** Sign in and Sign up screens with form validation using `react-hook-form` and `yup`.
+- **Inventory List:** Search, filter, and pull-to-refresh capabilities.
+- **Item Detail:** View detailed information and recent adjustments for each item.
+- **Add/Edit Item:** Forms with input validation and friendly error messages.
+- **Adjust Quantity:** Single screen or modal for adding or removing inventory with a reason.
+- **Audit Log:** Simple per-item history of changes.
+- **Context-based User Flow:** Automatically switches between authentication screens and inventory screens based on login state.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 🗂️ Project Structure
 
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+app/
+│ ├── index.tsx # App entry point, renders RootNavigator
+│ ├── navigation/
+│ │ ├── RootNavigator.tsx # Chooses AuthNavigator or AppNavigator based on user state
+│ │ ├── AuthNavigator.tsx # Stack navigator for SignIn / SignUp
+│ │ └── AppNavigator.tsx # Stack navigator for Inventory screens
+│ ├── screens/
+│ │ ├── Auth/
+│ │ │ ├── SignInScreen.tsx
+│ │ │ └── SignUpScreen.tsx
+│ │ ├── Inventory/
+│ │ │ ├── InventoryListScreen.tsx
+│ │ │ ├── ItemDetailScreen.tsx
+│ │ │ ├── AddEditItemScreen.tsx
+│ │ │ ├── AdjustQuantityScreen.tsx
+│ │ │ └── AuditLogScreen.tsx
+│
+components/
+│ ├── InputField.tsx # Reusable input component
+│ ├── ItemCard.tsx # Card component for displaying inventory items
+│ └── LoadingSpinner.tsx # Loading indicator
+│
+context/
+│ └── AuthContext.tsx # Handles user authentication state
+│
+services/
+│ └── api.ts # Axios setup for API requests
+│
+utils/
+│ └── validators.ts # Custom validation helpers
