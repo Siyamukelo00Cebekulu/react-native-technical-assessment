@@ -1,4 +1,4 @@
-# MobileApp
+# 🌐📱 MobileApp
 
 This is a **mobile inventory management app** built with **React Native**, **Expo**, and **TypeScript**. The app demonstrates a **minimum viable product (MVP)** user flow, including authentication, inventory listing, item management, quantity adjustments, and audit logging. It uses **React Navigation** for navigation and **React Context** for authentication state management.
 
@@ -30,7 +30,7 @@ This is a **mobile inventory management app** built with **React Native**, **Exp
 
 ---
 
-# Folder Structure
+# 🗂️ Folder Structure
 ``` bash
 app/
 │
@@ -68,7 +68,7 @@ utils/
 └── validators.ts # Custom validation helpers
 ```
 
-## Directory Overview
+## 🗂️ Directory Overview
 
 - **app/**: Main application directory containing the entry point and navigation
 - **components/**: Reusable UI components used throughout the app
