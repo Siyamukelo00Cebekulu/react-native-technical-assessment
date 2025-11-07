@@ -16,6 +16,7 @@
   "dependencies": {
     "@clerk/clerk-sdk-node": "^5.1.6",
     "@clerk/nextjs": "^6.34.3",
+    "axios": "^1.13.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "mongodb": "^5.0.0",
