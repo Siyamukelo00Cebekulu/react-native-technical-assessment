@@ -2,7 +2,7 @@
 
 ---
 
-This contains two folders: mobile/ (Expo + React Native + TypeScript) and backend/ (Next.js API + Mongo).
+This Repo contains two folders: mobile/ (Expo + React Native + TypeScript) and backend/ (Next.js API + Mongo).
 
 ## 🏗️ Architecture & Library Choices
 
