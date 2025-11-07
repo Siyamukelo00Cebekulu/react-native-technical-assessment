@@ -2,6 +2,8 @@
 
 ---
 
+This contains two folders: mobile/ (Expo + React Native + TypeScript) and backend/ (Next.js API + Mongo).
+
 ## 🏗️ Architecture & Library Choices
 
 ---
@@ -12,14 +14,30 @@
 
 ## ⚙️ Setup & Run Instructions
 
+**mobile folder**
 
-### **1. Clone the Repository**
+1. Install dependencies
 
-### **2. Install dependencies**
+   ```bash
+   npm install
+   ```
 
-### **3. Set Up Environment Variable**
+2. Start the app
 
-### **4. Start App**
+```bash
+    npx expo start
+```
+
+**backend folder**
+1. Install dependencies
+```bash
+    npm install
+```
+
+2. start app
+ ```bash
+    npm install
+```
 
 ---
 
