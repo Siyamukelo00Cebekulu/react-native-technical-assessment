@@ -36,7 +36,7 @@ npm install
 
 2. start app
  ```bash
-npm install
+npm run dev
 ```
 
 ---
