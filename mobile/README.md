@@ -30,35 +30,24 @@ This is a **mobile inventory management app** built with **React Native**, **Exp
 
 ---
 
-## 🗂️ Project Structure
+# Project Structure
 
-app/
-│ ├── index.tsx # App entry point, renders RootNavigator
-│ ├── navigation/
-│ │ ├── RootNavigator.tsx # Chooses AuthNavigator or AppNavigator based on user state
-│ │ ├── AuthNavigator.tsx # Stack navigator for SignIn / SignUp
-│ │ └── AppNavigator.tsx # Stack navigator for Inventory screens
-│ ├── screens/
-│ │ ├── Auth/
-│ │ │ ├── SignInScreen.tsx
-│ │ │ └── SignUpScreen.tsx
-│ │ ├── Inventory/
-│ │ │ ├── InventoryListScreen.tsx
-│ │ │ ├── ItemDetailScreen.tsx
-│ │ │ ├── AddEditItemScreen.tsx
-│ │ │ ├── AdjustQuantityScreen.tsx
-│ │ │ └── AuditLogScreen.tsx
-│
-components/
-│ ├── InputField.tsx # Reusable input component
-│ ├── ItemCard.tsx # Card component for displaying inventory items
-│ └── LoadingSpinner.tsx # Loading indicator
-│
-context/
-│ └── AuthContext.tsx # Handles user authentication state
-│
-services/
-│ └── api.ts # Axios setup for API requests
-│
-utils/
-│ └── validators.ts # Custom validation helpers
+| Path | Type | Description |
+|------|------|-------------|
+| `app/index.tsx` | File | App entry point, renders RootNavigator |
+| `app/navigation/RootNavigator.tsx` | File | Chooses AuthNavigator or AppNavigator based on user state |
+| `app/navigation/AuthNavigator.tsx` | File | Stack navigator for SignIn / SignUp |
+| `app/navigation/AppNavigator.tsx` | File | Stack navigator for Inventory screens |
+| `app/screens/Auth/SignInScreen.tsx` | File | Sign in screen component |
+| `app/screens/Auth/SignUpScreen.tsx` | File | Sign up screen component |
+| `app/screens/Inventory/InventoryListScreen.tsx` | File | Main inventory list screen |
+| `app/screens/Inventory/ItemDetailScreen.tsx` | File | Item details screen |
+| `app/screens/Inventory/AddEditItemScreen.tsx` | File | Add/edit item form screen |
+| `app/screens/Inventory/AdjustQuantityScreen.tsx` | File | Quantity adjustment screen |
+| `app/screens/Inventory/AuditLogScreen.tsx` | File | Audit log viewing screen |
+| `components/InputField.tsx` | File | Reusable input component |
+| `components/ItemCard.tsx` | File | Card component for displaying inventory items |
+| `components/LoadingSpinner.tsx` | File | Loading indicator component |
+| `context/AuthContext.tsx` | File | Handles user authentication state |
+| `services/api.ts` | File | Axios setup for API requests |
+| `utils/validators.ts` | File | Custom validation helpers |
