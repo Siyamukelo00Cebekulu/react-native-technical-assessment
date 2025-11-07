@@ -14,29 +14,29 @@ This contains two folders: mobile/ (Expo + React Native + TypeScript) and backen
 
 ## ⚙️ Setup & Run Instructions
 
-**mobile folder**
+**🗂️mobile folder**
 
 1. Install dependencies
 
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
 2. Start the app
 
 ```bash
-    npx expo start
+npx expo start
 ```
 
-**backend folder**
+**🗂️backend folder**
 1. Install dependencies
 ```bash
-    npm install
+npm install
 ```
 
 2. start app
  ```bash
-    npm install
+npm install
 ```
 
 ---
