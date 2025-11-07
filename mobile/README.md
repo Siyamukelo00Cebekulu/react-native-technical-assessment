@@ -31,7 +31,7 @@ This is a **mobile inventory management app** built with **React Native**, **Exp
 ---
 
 # Folder Structure
-
+``` bash
 app/
 │
 ├── index.tsx # App entry point, renders RootNavigator
@@ -66,6 +66,7 @@ services/
 │
 utils/
 └── validators.ts # Custom validation helpers
+```
 
 ## Directory Overview
 
